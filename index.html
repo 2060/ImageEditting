@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- CSS Styles -->
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+	<link rel="stylesheet" type="text/css" media="print" href="print.css"/>
+	<!-- jQuery & jQuery-UI's Selectable + Draggable -->
+	<script type="text/JavaScript" src="script/jquery-1.7.1.min.js"></script>
+	<script type="text/JavaScript" src="script/jquery-ui-1.8.18.custom.min.js"></script>
+	<!-- EaselJS Canvas Interface -->
+	<script type="text/JavaScript" src="script/easel.js"></script>
+	<!-- EaselJS' Built-in Filters -->
+	<script type="text/JavaScript" src="script/ColorFilter.js"></script>
+	<script type="text/JavaScript" src="script/ColorMatrixFilter.js"></script>
+	 
+	<!-- Main Application Structure -->
+	<script type="text/JavaScript" src="script/main.js"></script>
+	<!-- User Interface -->
+	<script type="text/JavaScript" src="script/ui.js"></script>
+	<!-- File Menu -->
+	<script type="text/JavaScript" src="script/file.js"></script>
+	<!-- Tools -->
+	<script type="text/JavaScript" src="script/tools.js"></script>
+	<!-- Layer Transformations -->
+	<script type="text/JavaScript" src="script/layer.js"></script>
+	<!-- Image Transformations -->
+	<script type="text/JavaScript" src="script/image.js"></script>
+	<!-- Custom Filters -->
+	<script type="text/JavaScript" src="script/ConvolutionFilter.js"></script>
+	<script type="text/JavaScript" src="script/filters.js"></script>
+	<!-- Simple Scripting System -->
+	<script type="text/JavaScript" src="script/scripts.js"></script>
+	<script type="text/JavaScript" src="script/resize.js"></script>
+	<!-- Simple Scripting System -->
+	<script type="text/JavaScript" src="script/jscolor.js"></script>
+	<script type="text/JavaScript" src="script/changecolor.js"></script>
+	<script type="text/JavaScript" src="script/price.js"></script>
+</head>
+<body>
+	<!-- Shade for all Dialogs -->
+	<div id="overlay"></div>
+	<!-- Crop Layer Element -->
+	<div id="cropoverlay" class="dialog">
+		<div></div>
+		<button style="position: absolute; top: -33px;" class="button-ok">Crop</button><button style="position: absolute; top: -33px; left: 50px;"  class="button-cancel">Cancel</button>
+	</div>
+	
+	<!-- Various Dialogs -->
+	<div id="dialog-openurl" class="dialog">
+		Please enter url to open:<br>
+		<input type="text" style="width: 350px;"/>
+		<button class="button-ok">Ok</button><button class="button-cancel">Cancel</button>
+	</div>
+	
+	<!-- Scale -->
+	<div id="dialog-scale" class="dialog">
+		Set scale:<br>
+		X: <input class="input-scaleX" type="text" style="width: 50px; text-align: right;" value="100"/>%  
+		Y: <input class="input-scaleY" type="text" style="width: 50px; text-align: right;" value="100"/>%  
+		<button class="button-ok">Ok</button><button class="button-cancel">Cancel</button>
+	</div>
+	
+	<!-- Rotate -->
+	<div id="dialog-rotate" class="dialog">
+		Rotate:<br>
+		<input type="text" style="width: 50px; text-align: right;" value="0"/>°  
+		<button class="button-ok">Ok</button><button class="button-cancel">Cancel</button>
+	</div>
+	
+	<!-- Skew -->
+	<div id="dialog-skew" class="dialog">
+		Skew:<br>
+		X: <input class="input-skewX" type="text" style="width: 50px; text-align: right;" value="100"/>°  
+		Y: <input class="input-skewY" type="text" style="width: 50px; text-align: right;" value="100"/>°  
+		<button class="button-ok">Ok</button><button class="button-cancel">Cancel</button>
+	</div>
+	
+	<!-- Rename Layer -->
+	<div id="dialog-layerrename" class="dialog">
+		Rename layer:<br>
+		<input type="text" style="width: 350px;"/>
+		<button class="button-ok">Ok</button><button class="button-cancel">Cancel</button>
+	</div>
+	
+	<!-- Add Text -->
+	<div id="dialog-tooltext" class="dialog">
+		Add text layer:<br>
+		Font:  
+		<select>
+			<option value="Calibri">Calibri</option>
+			<option value="Times New Roman">Times New Roman</option>
+			<option value="Courier New">Courier New</option>
+			<option value="Arial Black">Arial Black</option>
+			<option value="VNI 28 Zirkon">VNI 28 Zirkon</option>
+		</select>
+		Size: <input type="text" class="input-size" style="width: 50px" value="12px"/>
+		Color: <input type="color" class="input-color" /><br>
+		<input type="text" class="input-text" style="width: 318px"/>
+		<button class="button-ok">Ok</button><button class="button-cancel">Cancel</button>
+	</div>
+	
+	<!-- Change Color	-->
+	<div id="dialog-filtercolorify" class="dialog">
+		Colorify:<br>
+		<p> R: <input type="range" id="red" name="red" class="r" style="width: 90px;" min="0" max="255" value="0" onchange="show_value1(this.value)"><span id="x-value1" style="color:red;">0</span></p>
+		<p> G: <input type="range" id="green" class="g" style="width: 90px;" min="0" max="255" value="0" onchange="show_value2(this.value)"><span id="x-value2" style="color:red;">0</span></p>
+		<p> B: <input type="range" id="blue" class="b" style="width: 90px;" min="0" max="255" value="0" onchange="show_value3(this.value)"><span id="x-value3" style="color:red;">0</span></p>
+		<p> A: <input type="range" id="alpha" class="a" style="width: 90px;" min="0" max="1" step="0.1" value="0" onchange="show_value4(this.value)"><span id="x-value4" style="color:red;">0</span></p>
+		<button class="button-ok">Ok</button><button class="button-cancel">Cancel</button>
+	</div>
+	<div id="form" class="dialog">
+		<h1>Infomation of Your Images</h1>
+		<table id="form">
+			<tr>
+				<td><label for="pay">You want to print width:</label> </td>
+				<td>
+					<select id="chatlieu">
+						<option value="paper">Paper: 1$</option>
+						<option value="cloth">Cloth: 2$</option>
+						<option value="skin">Skin: 3$</option>
+						<option value="mica">Mica: 4$</option>
+					</select>
+				</td>
+				<td><label for="pay">Size: </label> </td>
+				<td>
+					<select id="kichthuoc">
+						<option value="large">Large: 5$</option>
+						<option value="medium">Medium: 4$</option>
+						<option value="small">Small: 3$</option>
+					</select>
+				</td>
+				<td><button value="submit" onclick="alert('Total Price = ' + price()+'$');">Submit</button></td>
+			</tr>
+		</table>
+	</div>
+	<!-- Main Menu -->
+	<div id="menus">
+		<ul id="mainmenu">
+			<li>
+				<button>File</button>
+				<ul class="submenu">
+					<li><button id="button-openfile"><input type="file"/><span style="margin-top: -32px; display: block;">Open File</span></button></li>
+					<li><button id="button-openurl">Open URL</button></li>
+					<li><hr/></li>
+					<li><button id="button-importfile"><input type="file" multiple="true"/><span style="margin-top: -32px; display: block;">Import File</span></button></li>
+					<li><button id="button-importurl">Import URL</button></li>
+					<li><hr/></li>
+					<li><button id="button-save">Save</button></li>
+					<li><button id="button-print">Print</button></li>
+				</ul>
+			</li>
+			<li>
+				<button>Layer</button>
+				<ul class="submenu">
+					<li><button id="button-layercrop">Crop</button></li>
+					<li><button id="button-layerscale">Scale</button></li>
+					<li><button id="button-layerrotate">Rotate</button></li>
+				</ul>
+			</li>
+			<li>
+				<button>Image</button>
+				<ul class="submenu">
+					<li><button id="button-imagescale">Scale</button></li>
+					<li><hr/></li>
+					<li><button id="button-imagerotate">Rotate</button></li>
+					<li><button id="button-imageskew">Skew</button></li>
+				</ul>
+			</li>
+			<li>
+				<button id="button-filtercolorify">Colorify</button>
+			</li>
+			
+			<li>
+				 <button id="button-undo"><img src="img/undo.png"></button>
+			</li>
+			<li>
+				 <button id="button-redo"><img src="img/redo.png"></button>
+			</li>
+			<li>
+				<button id="button-layerflipv"><img src="img/flip-vertically.png"></button>
+			</li>
+			<li>
+				<button id="button-layerfliph"><img src="img/flip-horizontal.png"></button>
+			</li>
+			<li>
+				<button id="button-filterbrightness-incr"><img src="img/brightness-increase.png"></button>
+			</li>
+			<li>
+				<button id="button-filterbrightness-decr"><img src="img/brightness-decrease.png"></button>
+			</li>
+			</li>
+			<li style="float: right;"><button id="button-text"/></li>
+			<li style="float: right;"><button id="button-move"/></li>
+			<li style="float: right;"><button id="button-select" class="active"/></li>
+		</ul>
+	</div>
+	<!-- Right Layer Panel -->
+	<div id="layer">
+		<ul id="layers"></ul>
+	</div>
+	<!-- Canvas for Drawing -->
+	<div id="layout">
+		<canvas id="canvas"></canvas>
+	</div>
+</body>
+</html>
